@@ -17,12 +17,13 @@
         android:layout_height="wrap_content"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/myFAB"
+        android:id="@+id/captureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/camera_icon"
-        app:elevation="4dp" />
+        app:elevation="4dp"
+        android:onClick=""/>
 
 </RelativeLayout>

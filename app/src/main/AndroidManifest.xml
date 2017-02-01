@@ -23,6 +23,22 @@
         <activity android:name=".DetailsActivity" android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".PreviewActivity" android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".GalleryActivity" android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".AndroidCameraApi" android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>
