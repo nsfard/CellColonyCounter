@@ -206,7 +206,7 @@ public class CameraTab extends Fragment {
                             image.close();
                         }
                     }
-                    Intent intent = new Intent(getActivity(), PreviewActivity.class);
+                    Intent intent = new Intent(getActivity(), DevPreviewActivity.class);
                     intent.putExtra(MainActivity.IMAGE_PATH_KEY, file.getAbsolutePath());
                     intent.putExtra(MainActivity.FROM_CAM_KEY, true);
                     startActivity(intent);
