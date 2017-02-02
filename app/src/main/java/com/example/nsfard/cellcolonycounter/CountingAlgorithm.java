@@ -5,9 +5,9 @@ package com.example.nsfard.cellcolonycounter;
  */
 public class CountingAlgorithm {
     private static CountingAlgorithm instance = null;
-    private static String inputImage;
-    private static String outputImage;
-    private static int outputCount;
+    private static String inputImage = null;
+    private static String outputImage = null;
+    private static int outputCount = 0;
     private static AlgorithmCompletedListener listener = null;
 
     public static void setListener(AlgorithmCompletedListener listener) {

@@ -69,7 +69,9 @@ public class DevPreviewActivity extends AppCompatActivity implements AlgorithmCo
     public void algorithmCompleted(int count, String image) {
         countTV.setText(String.valueOf(count));
 
-        Bitmap outputBitmap = BitmapFactory.decodeFile(image);
-        outputImageView.setImageBitmap(outputBitmap);
+        if (image != null) {
+            Bitmap outputBitmap = BitmapFactory.decodeFile(image);
+            outputImageView.setImageBitmap(outputBitmap);
+        }
     }
 }
