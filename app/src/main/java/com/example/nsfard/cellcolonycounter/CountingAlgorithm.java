@@ -71,8 +71,8 @@ public class CountingAlgorithm {
                 int radius = (int)Math.round(vCircle[2]);
 
                 // draw the found circle
-                Imgproc.circle(imgMat, pt, 3, new Scalar(0, 0, 255));
-                Imgproc.circle(imgMat, pt, radius, new Scalar(0, 255, 0));
+                Imgproc.circle(imgMat, pt, 3, new Scalar(0, 0, 255), 5);
+                Imgproc.circle(imgMat, pt, radius, new Scalar(0, 255, 0), 5);
             }
 
         // Write back to new image path
