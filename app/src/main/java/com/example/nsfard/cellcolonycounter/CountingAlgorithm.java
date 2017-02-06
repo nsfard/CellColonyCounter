@@ -25,6 +25,6 @@ public class CountingAlgorithm {
         // do algorithm stuff here
 
         // report results
-        listener.algorithmCompleted(outputCount, outputImage);
+        listener.algorithmCompleted(2, inputImage);
     }
 }
