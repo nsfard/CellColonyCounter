@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
+
 import java.io.File;
 
 /**
@@ -21,6 +25,25 @@ public class DevPreviewActivity extends AppCompatActivity implements AlgorithmCo
     private ImageView outputImageView;
     private TextView countTV;
     private SharedPreferences.Editor prefsEditor;
+
+
+//    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch(status) {
+//                case BaseLoaderCallback.SUCCESS:
+//                {
+//                    Log.i("OpenCV", "OpenCV loaded successfully");
+//                    Mat imgMat = new Mat();
+//                } break;
+//                default:
+//                {
+//                    super.onManagerConnected(status);
+//                } break;
+//            }
+//        }
+//    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +70,10 @@ public class DevPreviewActivity extends AppCompatActivity implements AlgorithmCo
 
         Bitmap inputBitmap = BitmapFactory.decodeFile(inputImagePath);
         inputImageView.setImageBitmap(inputBitmap);
+
+        if (!OpenCVLoader.initDebug()) {
+            // Handle Error message here
+        }
 
         try {
             CountingAlgorithm.runAlgorithm(inputImagePath);

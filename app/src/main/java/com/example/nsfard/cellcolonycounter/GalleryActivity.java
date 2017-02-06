@@ -84,7 +84,7 @@ public class GalleryActivity extends AppCompatActivity implements AdapterView.On
             invalidateList();
         }
         else if (currentFileList.get(i).endsWith(".png") || currentFileList.get(i).endsWith(".jpg")) {
-            Intent intent = new Intent(this, PreviewActivity.class);
+            Intent intent = new Intent(this, DevPreviewActivity.class);
             intent.putExtra(MainActivity.IMAGE_PATH_KEY, currentFileList.get(i));
             intent.putExtra(MainActivity.FROM_CAM_KEY, false);
             startActivity(intent);
