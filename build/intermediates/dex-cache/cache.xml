@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/robin/class/CellColonyCounter/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.0.1_225d94a78fd6a9c50cf8c15ce2ca7ca3f421ebc2.jar" />
+    </item>
+    <item
+        jar="/Users/robin/class/CellColonyCounter/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_890840bd2720164ca8179c7d10159562fdf8f3f1.jar" />
+    </item>
+    <item
+        jar="/Users/robin/class/CellColonyCounter/app/build/intermediates/exploded-aar/CellColonyCounter/openCVLibrary320/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1e7ad4962993ade350eeb926a401494735ee6385">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/CellColonyCounter-openCVLibrary320-unspecified_a5827b0b9d27a73fbd9b8b7e8080984bba65ac2b.jar" />
+    </item>
+    <item
+        jar="/Users/robin/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_08c6211d277ee87893a0f85236c4f32725792f8d.jar" />
+    </item>
+    <item
+        jar="/Users/robin/class/CellColonyCounter/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_704e5218d97312651b87084fdab0109be99ae20f.jar" />
+    </item>
+    <item
+        jar="/Users/robin/class/CellColonyCounter/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/robin/class/CellColonyCounter/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_698b9d7e6c3b28628e4d1804be79fa682a158928.jar" />
+    </item>
+
+</items>
