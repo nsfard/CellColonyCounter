@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -69,10 +70,12 @@ public class CameraTab extends Fragment {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    private CustomCircleShapeView circle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_camera, container, false);
+//        view.setBackgroundColor(Color.RED);
         textureView = (TextureView) view.findViewById(R.id.cameraTextureView);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
@@ -84,6 +87,8 @@ public class CameraTab extends Fragment {
                 takePicture();
             }
         });
+        circle = (CustomCircleShapeView) view.findViewById(R.id.customCircleView);
+        circle.invalidate();
 
         new File(MainActivity.PARENT_DIR).mkdirs();
 
