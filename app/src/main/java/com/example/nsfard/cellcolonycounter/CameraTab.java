@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -211,7 +210,7 @@ public class CameraTab extends Fragment {
                             image.close();
                         }
                     }
-                    Intent intent = new Intent(getActivity(), DevPreviewActivity.class);
+                    Intent intent = new Intent(getActivity(), PreviewActivity.class);
                     intent.putExtra(MainActivity.IMAGE_PATH_KEY, file.getAbsolutePath());
                     intent.putExtra(MainActivity.FROM_CAM_KEY, true);
                     startActivity(intent);

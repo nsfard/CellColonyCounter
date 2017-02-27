@@ -61,7 +61,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         previewImage.setImageBitmap(bitmap);
-        doGrayScale(previewImage);
+//        doGrayScale(previewImage);
         previewImage.setInitialScaleFactor(1f);
         previewImage.initImage();
 
