@@ -31,4 +31,8 @@ public class Result {
     public int getCount() {
         return count;
     }
+
+    public void editCount(int newCount) {
+        this.count = newCount;
+    }
 }

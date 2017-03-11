@@ -5,20 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
+import android.widget.Toast;
 
 /**
  * Created by nsfard on 10/27/16.
@@ -27,15 +23,14 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
     protected static final String DETAIL_NAME_KEY = "detail_name_key";
     protected static final String DETAIL_DATE_KEY = "detail_date_key";
     protected static final String DETAIL_COUNT_KEY = "detail_count_key";
+    protected static final String DETAIL_INDEX_KEY = "detail_index_key";
     private TextView nameTV;
     private TextView countTV;
     private TextView dateTV;
     private ZoomImageView detailImage;
-    private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    private Matrix matrix = new Matrix();
-    private float scale = 1f;
-    private ScaleGestureDetector SGD;
     private SharedPreferences.Editor prefsEditor;
+    private String count = "-1";
+    private int index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +45,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
         dateTV = (TextView) findViewById(R.id.resultDetailDate);
         countTV = (TextView) findViewById(R.id.resultDetailColonySize);
 
-        //SGD = new ScaleGestureDetector(this, new ScaleListener());
-
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString(MainActivity.IMAGE_PATH_KEY) != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(bundle.getString(MainActivity.IMAGE_PATH_KEY));
             detailImage.setImageBitmap(bitmap);
-            doGrayScale(detailImage);
         }
 
         if (bundle.getString(DETAIL_NAME_KEY) != null) {
@@ -71,12 +63,11 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
             countTV.setText(bundle.getString(DETAIL_COUNT_KEY));
         }
 
-        detailImage.setInitialScaleFactor(.3f);
+        index = bundle.getInt(DETAIL_INDEX_KEY);
+
+        detailImage.setInitialScaleFactor(.9f);
         detailImage.setOnLongClickListener(this);
         detailImage.initImage();
-
-//        matrix.setScale(.3f, .3f);
-//        detailImage.setImageMatrix(matrix);
     }
 
     @Override
@@ -91,7 +82,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.shareOption:
+            case R.id.editOption:
+                showEditDialog();
                 return true;
             case R.id.deleteOption:
                 showDeleteDialog();
@@ -108,14 +100,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(MainActivity.DELETE_KEY, false);
+        intent.putExtra(MainActivity.NEW_COUNT_KEY, count);
+        intent.putExtra(MainActivity.NEW_COUNT_INDEX_KEY, index);
         startActivity(intent);
     }
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        SGD.onTouchEvent(event);
-//        return true;
-//    }
 
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -143,11 +131,41 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
         d.show();
     }
 
-    private void doGrayScale(ImageView v) {
-        ColorMatrix colorMatrix = new ColorMatrix();
-        colorMatrix.setSaturation(0);
-        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(colorMatrix);
-        v.setColorFilter(cf);
+    private void showEditDialog() {
+        View customView = getLayoutInflater().inflate(R.layout.enter_name_dialog, null);
+        final EditText input = (EditText) customView.findViewById(R.id.enterNameInput);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(customView);
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    int newCount = Integer.parseInt(input.getText().toString());
+                    if (index == -1) {
+                        throw new Exception();
+                    }
+
+                    count = String.valueOf(newCount);
+                    countTV.setText(String.valueOf(newCount));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Please enter a valid integer", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setTitle("Enter New Count");
+
+        final AlertDialog d = builder.create();
+        d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        d.show();
     }
 
     @Override
@@ -155,15 +173,4 @@ public class DetailsActivity extends AppCompatActivity implements View.OnLongCli
         detailImage.initImage();
         return true;
     }
-
-//    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
-//        @Override
-//        public boolean onScale(ScaleGestureDetector detector) {
-//            scale = scale * detector.getScaleFactor();
-//            scale = Math.max(.3f,Math.min(scale,5f));
-//            matrix.setScale(scale, scale);
-//            detailImage.setImageMatrix(matrix);
-//            return true;
-//        }
-//    }
 }

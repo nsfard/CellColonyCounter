@@ -44,14 +44,7 @@ public class ResultsTab extends Fragment implements AdapterView.OnItemClickListe
         intent.putExtra(DetailsActivity.DETAIL_NAME_KEY, resultList.get(i).getName());
         intent.putExtra(DetailsActivity.DETAIL_DATE_KEY, resultList.get(i).getDate());
         intent.putExtra(DetailsActivity.DETAIL_COUNT_KEY, String.valueOf(resultList.get(i).getCount()));
+        intent.putExtra(DetailsActivity.DETAIL_INDEX_KEY, i);
         startActivity(intent);
-    }
-
-    protected ArrayList<Result> getResultList() {
-        return resultList;
-    }
-
-    protected ResultAdapter getResultAdapter() {
-        return resultAdapter;
     }
 }

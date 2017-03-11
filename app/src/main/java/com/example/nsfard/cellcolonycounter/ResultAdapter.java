@@ -64,9 +64,4 @@ public class ResultAdapter extends ArrayAdapter<Result> {
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
-
-    public void updateList(ArrayList<Result> newList) {
-        resultList = newList;
-        notifyDataSetChanged();
-    }
 }

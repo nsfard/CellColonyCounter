@@ -2,17 +2,16 @@ package com.example.nsfard.cellcolonycounter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected static final String DISPLAY_CAM = "display_camera";
     protected static final String FROM_CAM_KEY = "img_from_camera";
     protected static final String PARENT_DIR = Environment.getExternalStorageDirectory()+"/CellColonyCounter/";
+    protected static final String NEW_COUNT_KEY = "new_count_key";
+    protected static final String NEW_COUNT_INDEX_KEY = "new_count_index_key";
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private CameraTab cameraTab;
@@ -107,6 +108,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (bundle != null && bundle.getString(NEW_COUNT_KEY) != null) {
+            if (!bundle.getString(NEW_COUNT_KEY).equals("-1")) {
+                if (bundle.getInt(NEW_COUNT_INDEX_KEY) != -1) {
+                    resultCounts.set(bundle.getInt(NEW_COUNT_INDEX_KEY), bundle.getString(NEW_COUNT_KEY));
+                    prefsEditor.putString(MainActivity.RESULT_COUNTS_KEY, TextUtils.join(",", resultCounts));
+                    prefsEditor.commit();
+                    results.get(bundle.getInt(NEW_COUNT_INDEX_KEY)).editCount(Integer.parseInt(bundle.getString(NEW_COUNT_KEY)));
+                }
+            }
+        }
+
         if (!displayFragString.equals("")) {
             if (displayFragString.equals(DISPLAY_RESULTS)) {
                 viewPager.setCurrentItem(1, false);
@@ -127,9 +139,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addImage:
-//                selectPicture();
                 Intent intent = new Intent(this, GalleryActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.userGuide:
+                showUserGuide();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -139,37 +154,6 @@ public class MainActivity extends AppCompatActivity {
         return results;
     }
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Intent intent;
-//        String selectedImagePath = "";
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == SELECT_PICTURE) {
-//                Uri selectedImageUri = data.getData();
-//
-//                //OI FILE Manager
-//                selectedImagePath = getRealPathFromURI(selectedImageUri);
-//
-//                //NOW WE HAVE OUR WANTED STRING
-////                if(selectedImagePath!=null) {
-////                    System.out.println("selectedImagePath is the right one for you!");
-////                }
-////                else if (filemanagerstring!=null){
-////                    System.out.println("filemanagerstring is the right one for you!");
-////                    selectedImagePath = filemanagerstring;
-////                }
-////                else {
-////                    System.out.println("Both strings are NULL you're screwed");
-////                }
-//
-//            }
-//
-//            intent = new Intent(this, PreviewActivity.class);
-//            intent.putExtra(IMAGE_PATH_KEY, selectedImagePath);
-//            intent.putExtra(FROM_CAM_KEY, false);
-//            startActivity(intent);
-//        }
-//    }
-
     private void setupViewPager(ViewPager vp) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(cameraTab, "Camera");
@@ -177,25 +161,15 @@ public class MainActivity extends AppCompatActivity {
         vp.setAdapter(adapter);
     }
 
-    private void selectPicture() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,
-                "Select Picture"), SELECT_PICTURE);
-    }
+    private void showUserGuide() {
+        View customView = getLayoutInflater().inflate(R.layout.user_guide_popup, null);
 
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(customView);
+        builder.setTitle("User's Guide");
+        builder.setPositiveButton("Done", null);
+
+        AlertDialog d = builder.create();
+        d.show();
     }
 }

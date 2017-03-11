@@ -1,9 +1,11 @@
 package com.example.nsfard.cellcolonycounter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -11,9 +13,13 @@ import android.view.View;
  * Created by nsfard on 2/15/17.
  */
 public class CustomCircleShapeView extends View {
-    private  Context context;
-    private Paint paint;
-//    private SurfaceHolder holder;
+    private Bitmap bitmap;
+    private Context context;
+    private Paint transPaint;
+    private Paint blackPaint;
+    private Canvas temp;
+    private Paint p;
+    private Path path;
 
     public CustomCircleShapeView(Context context) {
         super(context);
@@ -42,23 +48,29 @@ public class CustomCircleShapeView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas = holder.lockCanvas();
-//        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        canvas.drawColor(Color.TRANSPARENT);
-//        canvas.drawRect(getX(), 50, 200, 200, paint);
-//        canvas.drawCircle(getX() + getWidth()/2, getY() + getHeight()/2, getWidth()/2, paint);
-        canvas.drawCircle(getWidth()/2,getWidth()/2 + 20,getWidth()/2, paint);
-//        holder.unlockCanvasAndPost(canvas);
 
+        path.reset();
+        path.addCircle(getWidth()/2, getWidth()/2 + 50, getWidth()/2, Path.Direction.CW);
+        path.setFillType(Path.FillType.INVERSE_EVEN_ODD);
+
+        canvas.drawCircle(getWidth()/2,getWidth()/2 + 50,getWidth()/2, transPaint);
+        canvas.drawPath(path, blackPaint);
+        canvas.drawRect(0, 0, getWidth(), 50, blackPaint);
+        canvas.drawRect(0, getWidth() + 50, getWidth(), getHeight(), blackPaint);
+//        canvas.clipPath(path);
     }
 
     private void setUp(Context context) {
         this.context = context;
 
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5);
+        path = new Path();
+
+        blackPaint = new Paint();
+        blackPaint.setColor(Color.BLACK);
+
+        transPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        transPaint.setColor(Color.TRANSPARENT);
+        transPaint.setStyle(Paint.Style.FILL);
         invalidate();
     }
 }

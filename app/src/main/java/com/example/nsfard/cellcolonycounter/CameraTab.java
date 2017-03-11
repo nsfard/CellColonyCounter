@@ -74,7 +74,6 @@ public class CameraTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_camera, container, false);
-//        view.setBackgroundColor(Color.RED);
         textureView = (TextureView) view.findViewById(R.id.cameraTextureView);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
@@ -124,7 +123,6 @@ public class CameraTab extends Fragment {
         @Override
         public void onOpened(CameraDevice camera) {
             //This is called when the camera is open
-            //Log.e(TAG, "onOpened");
             cameraDevice = camera;
             createCameraPreview();
         }
@@ -143,7 +141,6 @@ public class CameraTab extends Fragment {
         @Override
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-            //Toast.makeText(getActivity(), "Saved:" + file, Toast.LENGTH_SHORT).show();
             createCameraPreview();
         }
     };
@@ -164,7 +161,6 @@ public class CameraTab extends Fragment {
     }
     protected void takePicture() {
         if(null == cameraDevice) {
-            //Log.e(TAG, "cameraDevice is null");
             return;
         }
         CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
@@ -232,8 +228,6 @@ public class CameraTab extends Fragment {
                 @Override
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    //Toast.makeText(getActivity(), "Saved:" + file, Toast.LENGTH_SHORT).show();
-                    //createCameraPreview();
                 }
             };
             cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
@@ -274,7 +268,6 @@ public class CameraTab extends Fragment {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    //Toast.makeText(getActivity(), "Configuration change", Toast.LENGTH_SHORT).show();
                 }
             }, null);
         } catch (CameraAccessException e) {
@@ -283,7 +276,6 @@ public class CameraTab extends Fragment {
     }
     private void openCamera() {
         CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
-        //Log.e(TAG, "is camera open");
         try {
             cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
@@ -299,12 +291,8 @@ public class CameraTab extends Fragment {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-        //Log.e(TAG, "openCamera X");
     }
     protected void updatePreview() {
-        if(null == cameraDevice) {
-            //Log.e(TAG, "updatePreview error, return");
-        }
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
         try {
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
@@ -327,7 +315,6 @@ public class CameraTab extends Fragment {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // close the app
-                //Toast.makeText(getActivity(), "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
         }

@@ -1,13 +1,10 @@
 package com.example.nsfard.cellcolonycounter;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,16 +12,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -61,7 +52,6 @@ public class PreviewActivity extends AppCompatActivity {
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         previewImage.setImageBitmap(bitmap);
-//        doGrayScale(previewImage);
         previewImage.setInitialScaleFactor(1f);
         previewImage.initImage();
 
@@ -104,14 +94,6 @@ public class PreviewActivity extends AppCompatActivity {
 
         View customView = getLayoutInflater().inflate(R.layout.enter_name_dialog, null);
         final EditText input = (EditText) customView.findViewById(R.id.enterNameInput);
-//        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    hideKeyboard(v);
-//                }
-//            }
-//        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(customView);
@@ -158,17 +140,9 @@ public class PreviewActivity extends AppCompatActivity {
                 prefsEditor.putString(MainActivity.DISPLAY_FRAG, MainActivity.DISPLAY_RESULTS);
                 prefsEditor.commit();
 
-                //todo consider picking from gallery
-                if (fromCam) {
-                    new File(imagePath).renameTo(new File(path));
-                }
-                else {
-                    try {
-                        copy(new File(imagePath), new File(path));
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
-                }
+                View v = findViewById(R.id.screenShotLayout);
+                takeScreenshot(v, path);
+
                 if (fromCam) {
                     onBackPressed();
                 }
@@ -184,29 +158,23 @@ public class PreviewActivity extends AppCompatActivity {
         d.show();
     }
 
-    private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    private void doGrayScale(ImageView v) {
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
-        v.setColorFilter(cf);
-    }
-
-    private void copy(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
-
-        // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
+    private void takeScreenshot(View v, String path) {
+        if (v == null) {
+            Log.e("TEST", "view is null");
         }
-        in.close();
-        out.close();
+        v.setDrawingCacheEnabled(true);
+        v.buildDrawingCache(true);
+        Bitmap bitmap = Bitmap.createBitmap(v.getDrawingCache());
+        v.setDrawingCacheEnabled(false);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(path);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
