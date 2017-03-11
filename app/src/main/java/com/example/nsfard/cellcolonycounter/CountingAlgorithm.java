@@ -100,6 +100,6 @@ public class CountingAlgorithm {
         // Write back to new image path
         Imgcodecs.imwrite(newPath, imgMat);
         // report results
-        listener.algorithmCompleted(max, newPath);
+        listener.algorithmCompleted(contours.size(), newPath);
     }
 }
