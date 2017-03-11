@@ -3,66 +3,66 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jar="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
-        revision="23.0.3"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.1_2fc09da23aeb0e87a8a5b0ef69138cfbf9a4d540\classes.dex" />
+        revision="25.0.0"
+        sha1="ee31790c59260922902c7da6158383fb2ac1b7dc">
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_40724664e4761116d66b8698ad9fa8cd9da1be40/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\andre\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="/Users/andrewkim/.android/build-cache/02dbe5029b0a210da442f29b9f32a1a3878888da/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
-        revision="23.0.3"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.0.1_3179eb72f2f0e8735b735b82f2df6e3cc39ce0a3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.0.1_57614dd08da719c40ed63a0674348f560c6aad0d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="ab33aee4e94b47424e7d2138479d40296b880834">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_14a8a8aa861672572fd05173eb93755d2317b068\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="caa9b52f0521fd0e4f16488ad4cdbcb120c28d06">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3f1a3e769b3e26fee9676d71c74f88fa77566afa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
+        revision="25.0.0"
         sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.0.1_b4c0307ba96f4d816e883f2d2f5be8f1a61ca3f2\classes.dex" />
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_be1c24cdf62858dbec80198d84fd600ba95e98d6/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jar="/Users/andrewkim/.android/build-cache/9d4c4a77ce0063767a570a7f41e12e7c3124f495/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
-        revision="23.0.3"
+        revision="25.0.0"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.0.1_bdd8de38214deb3c0ed3aa8fc4af1709ac680ea2\classes.dex" />
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9dde33aad4bfa3ca1b0af101eb24549e24a9b72e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/andrewkim/.android/build-cache/9d4c4a77ce0063767a570a7f41e12e7c3124f495/output/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.0.1_596271fa7892f5dbca1423795747ae7d82650835/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/andrewkim/.android/build-cache/08373e50d58fbb9fe414665b59cd6c49bc0ecca3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3295b01f94f7694101bb9958b3584141f0c381b0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/andrewkim/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.0.1_da150314ec320b8f0402c529c62158e21538f08b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/andrewkim/Documents/Github/CellColonyCounter/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_adec4ee793b338ccede03a4e014c3742e041b313/classes.dex" />
     </item>
 
 </items>

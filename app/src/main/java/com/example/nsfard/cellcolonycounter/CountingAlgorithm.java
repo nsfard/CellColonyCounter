@@ -11,14 +11,21 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.CLAHE;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Algorithm;
 import org.opencv.utils.*;
 import org.opencv.imgcodecs.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.*;
 
 /**
  * Created by nsfard on 1/31/17.
@@ -44,40 +51,55 @@ public class CountingAlgorithm {
 
         // do algorithm stuff here
         String path = inputImage;
-        String newPath = "/storage/emulated/0/DCIM/results.jpg";
+        String newPath = "/storage/emulated/0/DCIM/results.png";
         // Save image as a Mat object
         Mat imgMat = Imgcodecs.imread(path);
         Mat grayMat = new Mat();
         // Grayscale
         Imgproc.cvtColor(imgMat, grayMat, Imgproc.COLOR_RGB2GRAY);
 
-        // Hough Circle Detection
-        int iMinRadius = 30;
-        int iMaxRadius = 70;
+        // Apply CLAHE
+        Mat claheMat = new Mat();
+        CLAHE clahe = Imgproc.createCLAHE(2.0, new Size(8,8));
+        clahe.apply(grayMat, claheMat);
 
-        Mat circles = new Mat();
-        Imgproc.HoughCircles(grayMat, circles, Imgproc.CV_HOUGH_GRADIENT,
-                1.2, 30, 50, 30, iMinRadius, iMaxRadius);
+        // Normalize
+        Core.normalize(claheMat, claheMat, 0, 100, Core.NORM_MINMAX, CvType.CV_8UC1);
+        // Getting the max histogram value
+        Vector<Mat> matList = new Vector<Mat>();
+        matList.add(claheMat);
 
-        if (circles.cols() > 0)
-            for (int x = 0; x < circles.cols(); x++)
-            {
-                double vCircle[] = circles.get(0,x);
+        Mat histMat = new Mat();
+        Imgproc.calcHist(matList, new MatOfInt(0), new Mat(), histMat, new MatOfInt(256), new MatOfFloat(0, 256));
 
-                if (vCircle == null)
-                    break;
+        // find the max value in the histogram
+        histMat.put(0, 0, 0);
+        Core.MinMaxLocResult histResults = Core.minMaxLoc(histMat);
+        double hist_max = histResults.maxLoc.y;
+        int max = (int)hist_max;
 
-                Point pt = new Point(Math.round(vCircle[0]), Math.round(vCircle[1]));
-                int radius = (int)Math.round(vCircle[2]);
+        // Threshold based on histogram
+        Mat threshMat = new Mat();
+        Imgproc.threshold(claheMat, threshMat, max + 20, 100, Imgproc.THRESH_BINARY);
+        Imgproc.medianBlur(threshMat, threshMat, 9);
 
-                // draw the found circle
-                Imgproc.circle(imgMat, pt, 3, new Scalar(0, 0, 255), 5);
-                Imgproc.circle(imgMat, pt, radius, new Scalar(0, 255, 0), 5);
-            }
+        // Dilate
+        Imgproc.dilate(threshMat, threshMat,
+                Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3)), new Point(), 4);
+
+        // Find contours
+        List<MatOfPoint> contours = new Vector<MatOfPoint>();
+        Imgproc.findContours(threshMat, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+
+        // This should be temporary for testing the output image
+        Mat res = new Mat();
+        for (int i = 0; i < contours.size(); i++) {
+            Imgproc.drawContours(imgMat, contours, i, new Scalar(0, 255, 0), 3);
+        }
 
         // Write back to new image path
         Imgcodecs.imwrite(newPath, imgMat);
         // report results
-        listener.algorithmCompleted(circles.cols() , newPath);
+        listener.algorithmCompleted(max, newPath);
     }
 }
