@@ -50,10 +50,10 @@ public class FileAdapter extends ArrayAdapter<String> {
             holder.image.setImageResource(R.drawable.icon_dir_bigger);
         }
 
-//        holder.image.requestLayout();
-//        holder.image.getLayoutParams().height = 100;
-//        holder.image.getLayoutParams().width = 100;
-//        holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
+        holder.image.requestLayout();
+        holder.image.getLayoutParams().height = 100;
+        holder.image.getLayoutParams().width = 100;
+        holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
 
         holder.name.setText(file.getName());
 
