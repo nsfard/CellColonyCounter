@@ -83,7 +83,7 @@ public class GalleryActivity extends AppCompatActivity implements AdapterView.On
             currentDir = currentFileList.get(i);
             invalidateList();
         }
-        else if (currentFileList.get(i).endsWith(".png") || currentFileList.get(i).endsWith(".jpg")) {
+        else if (currentFileList.get(i).endsWith(".png") || currentFileList.get(i).endsWith(".PNG") || currentFileList.get(i).endsWith(".jpg") || currentFileList.get(i).endsWith(".JPG")) {
             Intent intent = new Intent(this, PreviewActivity.class);
             intent.putExtra(MainActivity.IMAGE_PATH_KEY, currentFileList.get(i));
             intent.putExtra(MainActivity.FROM_CAM_KEY, false);

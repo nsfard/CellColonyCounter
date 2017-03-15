@@ -1,7 +1,6 @@
 package com.example.nsfard.cellcolonycounter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,17 +43,17 @@ public class FileAdapter extends ArrayAdapter<String> {
         }
 
         File file = new File(fileList.get(position));
-        if (file.isDirectory()) {
+        if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".JPG") || file.getName().endsWith(".PNG")) {
+            holder.image.setImageResource(R.drawable.ic_photo_black_24dp);
+        }
+        else if (file.isDirectory()) {
             holder.image.setImageResource(R.drawable.icon_dir_bigger);
         }
-        else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg")) {
-            holder.image.setImageBitmap(BitmapFactory.decodeFile(fileList.get(position)));
-        }
 
-        holder.image.requestLayout();
-        holder.image.getLayoutParams().height = 100;
-        holder.image.getLayoutParams().width = 100;
-        holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
+//        holder.image.requestLayout();
+//        holder.image.getLayoutParams().height = 100;
+//        holder.image.getLayoutParams().width = 100;
+//        holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
 
         holder.name.setText(file.getName());
 

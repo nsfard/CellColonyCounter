@@ -14,20 +14,29 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by nsfard on 11/12/16.
  */
-public class PreviewActivity extends AppCompatActivity {
+public class PreviewActivity extends AppCompatActivity implements AlgorithmCompletedListener {
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     private ZoomImageView previewImage;
+    private Bitmap bitmap;
     private String imagePath;
     private SharedPreferences.Editor prefsEditor;
     private boolean fromCam;
+    private String imageName = "";
+    private String imageDate = "";
+    private static ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +56,25 @@ public class PreviewActivity extends AppCompatActivity {
         fromCam = bundle.getBoolean(MainActivity.FROM_CAM_KEY);
 
         if (imagePath == null || !(new File(imagePath).exists())) {
-            Log.e("DEMO","imagePath is null");
+            Log.e("TEST","imagePath is null");
         }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        bitmap = BitmapFactory.decodeFile(imagePath);
         previewImage.setImageBitmap(bitmap);
         previewImage.setInitialScaleFactor(1f);
         previewImage.initImage();
 
+        if (!OpenCVLoader.initDebug()) {
+            Log.e("TEST", "error initializing cvloader");
+        }
 
+        CountingAlgorithm.setListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        bitmap = null;
+        super.onStop();
     }
 
     @Override
@@ -75,6 +94,39 @@ public class PreviewActivity extends AppCompatActivity {
             file.delete();
         }
         super.onBackPressed();
+    }
+
+    @Override
+    public void algorithmCompleted(int count, String image) {
+        Log.e("TEST", "Alg completed with count: " + count + ", path: " + image);
+        String imageNameString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_NAMES_KEY, "");
+        if (!imageNameString.equals("")) {
+            imageNameString += ",";
+        }
+        imageNameString += imageName;
+        prefsEditor.putString(MainActivity.RESULT_NAMES_KEY, imageNameString);
+
+        String imageDateString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_DATES_KEY, "");
+        if (!imageDateString.equals("")) {
+            imageDateString += ",";
+        }
+        imageDateString += imageDate;
+        prefsEditor.putString(MainActivity.RESULT_DATES_KEY, imageDateString);
+
+        String imagePathString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_PATHS_KEY, "");
+        if (!imagePathString.equals("")) {
+            imagePathString += ",";
+        }
+        imagePathString += image;
+        prefsEditor.putString(MainActivity.RESULT_PATHS_KEY, imagePathString);
+
+        String imageCountString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_COUNTS_KEY, "");
+        if (!imageCountString.equals("")) {
+            imageCountString += ",";
+        }
+        imageCountString += String.valueOf(count);
+        prefsEditor.putString(MainActivity.RESULT_COUNTS_KEY, imageCountString);
+        prefsEditor.commit();
     }
 
     public void onRetakeSelected(View v) {
@@ -106,42 +158,27 @@ public class PreviewActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String imageName = input.getText().toString();
-                String imageNameString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_NAMES_KEY, "");
-                if (!imageNameString.equals("")) {
-                    imageNameString += ",";
-                }
-                imageNameString += imageName;
-                prefsEditor.putString(MainActivity.RESULT_NAMES_KEY, imageNameString);
-
-                String imageDate = sdf.format(new Date(System.currentTimeMillis()));
-                String imageDateString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_DATES_KEY, "");
-                if (!imageDateString.equals("")) {
-                    imageDateString += ",";
-                }
-                imageDateString += imageDate;
-                prefsEditor.putString(MainActivity.RESULT_DATES_KEY, imageDateString);
-
-                String path = MainActivity.PARENT_DIR + "/" + imageName + ".png";
-                String imagePathString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_PATHS_KEY, "");
-                if (!imagePathString.equals("")) {
-                    imagePathString += ",";
-                }
-                imagePathString += path;
-                prefsEditor.putString(MainActivity.RESULT_PATHS_KEY, imagePathString);
-
-                String imageCountString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_COUNTS_KEY, "");
-                if (!imageCountString.equals("")) {
-                    imageCountString += ",";
-                }
-                imageCountString += "0";
-                prefsEditor.putString(MainActivity.RESULT_COUNTS_KEY, imageCountString);
+                imageName = input.getText().toString();
+                imageDate = sdf.format(new Date(System.currentTimeMillis()));
+                final String path = MainActivity.PARENT_DIR + "/" + imageName + ".png";
 
                 prefsEditor.putString(MainActivity.DISPLAY_FRAG, MainActivity.DISPLAY_RESULTS);
                 prefsEditor.commit();
 
                 View v = findViewById(R.id.screenShotLayout);
                 takeScreenshot(v, path);
+
+                Log.e("TEST", "Began running alg");
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            CountingAlgorithm.runAlgorithm(path);
+                        } catch (Exception e) {
+                            Log.e("TEST", e.getMessage());
+                        }
+                    }
+                });
 
                 if (fromCam) {
                     onBackPressed();

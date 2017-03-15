@@ -9,9 +9,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.opencv.android.OpenCVLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.slidingTabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (!OpenCVLoader.initDebug()) {
+            Log.e("TEST", "error initializing cvloader");
+        }
     }
 
     @Override
