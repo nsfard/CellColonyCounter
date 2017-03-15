@@ -32,6 +32,12 @@ import java.util.*;
  * Created by nsfard on 1/31/17.
  */
 public class CountingAlgorithm {
+
+    public static class ML_Prediction {
+        public List<MatOfPoint> contours;
+        public int count;
+    }
+
     private static CountingAlgorithm instance = null;
     private static String inputImage = null;
     private static String outputImage = null;
@@ -39,6 +45,8 @@ public class CountingAlgorithm {
     private static AlgorithmCompletedListener listener = null;
     private static double avg_area;
     private static double avg_perim;
+    static ML_Prediction results = new ML_Prediction();
+
 
     public static void setListener(AlgorithmCompletedListener listener) {
         instance = new CountingAlgorithm();
@@ -1663,7 +1671,7 @@ public class CountingAlgorithm {
         avg_area = total_area / cnt;
     }
 
-    public static List<MatOfPoint> generate_feats_labels(Mat orig, List<MatOfPoint> contours) {
+    public static void generate_feats(Mat orig, List<MatOfPoint> contours) {
         Mat gray = new Mat();
         Mat hsv_img = new Mat();
         Mat tmp = new Mat();
@@ -1671,11 +1679,11 @@ public class CountingAlgorithm {
         Scalar avg_hue = new Scalar(0);
         double features[] = new double[4];
         List<MatOfPoint> colonyContours = new Vector<MatOfPoint>();
+        int contPrediction = 0;
+        int tempPredict = 0;
 
         double perim;
         double area;
-
-
 
         Imgproc.cvtColor(orig, gray, Imgproc.COLOR_RGB2GRAY);
         Imgproc.cvtColor(orig, hsv_img, Imgproc.COLOR_RGB2HSV);
@@ -1702,11 +1710,15 @@ public class CountingAlgorithm {
             Mat mask = Mat.zeros(orig.size(), CvType.CV_8UC1);
             Imgproc.drawContours(mask, contours, ndx , new Scalar(255, 255, 255), 1);
             features[3] = Core.mean(hue, mask).val[0];
-            if(predict(features) > 0) {
+            tempPredict = predict(features);
+            if(tempPredict > 0) {
+                contPrediction += tempPredict;
                 colonyContours.add(contours.get(ndx));
             }
         }
-        return colonyContours;
+
+        results.contours = colonyContours;
+        results.count = contPrediction;
     }
 
     public static void runAlgorithm(String inputImage) throws Exception {
@@ -1750,25 +1762,25 @@ public class CountingAlgorithm {
         Imgproc.threshold(claheMat, threshMat, max + 20, 100, Imgproc.THRESH_BINARY);
         Imgproc.medianBlur(threshMat, threshMat, 9);
 
-        // Dilate
-        Imgproc.dilate(threshMat, threshMat,
-                Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3)), new Point(), 4);
+        // Run Morphology
+        Imgproc.morphologyEx(threshMat, threshMat, Imgproc.MORPH_OPEN,
+                Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3)), new Point(), 2);
 
         // Find contours
         List<MatOfPoint> contours = new Vector<MatOfPoint>();
         Imgproc.findContours(threshMat, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
         // This should be temporary for testing the output image
-        List<MatOfPoint> filteredContours = generate_feats_labels(imgMat, contours);
+        generate_feats(imgMat, contours);
 
 
-        for (int i = 0; i < filteredContours.size(); i++) {
-            Imgproc.drawContours(imgMat, filteredContours, i, new Scalar(0, 255, 0), 3);
+        for (int i = 0; i < results.contours.size(); i++) {
+            Imgproc.drawContours(imgMat, results.contours, i, new Scalar(0, 255, 0), 3);
         }
 
         // Write back to new image path
         Imgcodecs.imwrite(newPath, imgMat);
         // report results
-        listener.algorithmCompleted(filteredContours.size(), newPath);
+        listener.algorithmCompleted(results.count, newPath);
     }
 }

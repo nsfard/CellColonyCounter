@@ -2,13 +2,22 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\andre\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.0.1_3179eb72f2f0e8735b735b82f2df6e3cc39ce0a3\classes.dex" />
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1_3179eb72f2f0e8735b735b82f2df6e3cc39ce0a3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\andre\.android\build-cache\93c20da0408a3dfdfe7d222fc4f1d9c2bec9a880\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\classes_86a4bd3f78524c4ab52e01d405811247a0cff40e.jar" />
     </item>
     <item
         is-multidex="true"
@@ -20,22 +29,22 @@
         <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_14a8a8aa861672572fd05173eb93755d2317b068\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\andre\.android\build-cache\72f6abacd80e900193e99e40f8f51e5ffcb31a87\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_94fded815da3cec49ff0aedf2cc061f7c82fbe56\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\andre\.android\build-cache\ba328aca3388a94919dcd0de73c498ba850e5b42\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_52fe7751dd1576f4ef29c21194429690f57afa25\classes.dex" />
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\classes_52fe7751dd1576f4ef29c21194429690f57afa25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\andre\.android\build-cache\72f6abacd80e900193e99e40f8f51e5ffcb31a87\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\classes_94fded815da3cec49ff0aedf2cc061f7c82fbe56.jar" />
     </item>
     <item
         is-multidex="true"
@@ -47,22 +56,22 @@
         <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3f1a3e769b3e26fee9676d71c74f88fa77566afa\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\andre\.android\build-cache\93c20da0408a3dfdfe7d222fc4f1d9c2bec9a880\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\andre\Documents\GitHub\CellColonyCounter\openCVLibrary320\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_86a4bd3f78524c4ab52e01d405811247a0cff40e\classes.dex" />
+        sha1="038e8806866760ccd8568b401b8052e937e4be1a">
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\classes_e0e9d4bc0845dfff744767ef3745cd67e9a761df.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\andre\.android\build-cache\72f6abacd80e900193e99e40f8f51e5ffcb31a87\output\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.1_bb45ecf735efa8d8ddd201c2229df77b21aa79ed\classes.dex" />
+        <dex dex="C:\Users\andre\Documents\GitHub\CellColonyCounter\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1_bb45ecf735efa8d8ddd201c2229df77b21aa79ed.jar" />
     </item>
 
 </items>
