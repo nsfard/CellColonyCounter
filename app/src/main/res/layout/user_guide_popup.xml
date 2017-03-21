@@ -9,13 +9,28 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/userGuideImage"
+                android:id="@+id/userGuideImage1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:src="@drawable/panorama"
+                android:src="@drawable/colonizer_user_manual_1"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/userGuideImage2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/colonizer_user_manual_2"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/userGuideImage3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/colonizer_user_manual_3"
                 android:adjustViewBounds="true"/>
 
         </LinearLayout>

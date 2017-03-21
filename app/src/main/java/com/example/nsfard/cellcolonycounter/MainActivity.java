@@ -158,6 +158,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected ArrayList<Result> getResults() {
+        resultNames = new ArrayList<>();
+        resultDates = new ArrayList<>();
+        resultCounts = new ArrayList<>();
+        resultPaths = new ArrayList<>();
+        results = new ArrayList<>();
+
+        String resultNameString = getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(RESULT_NAMES_KEY, "");
+        String resultDateString = getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(RESULT_DATES_KEY, "");
+        String resultPathString = getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(RESULT_PATHS_KEY, "");
+        String resultCountString = getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(RESULT_COUNTS_KEY, "");
+        String displayFragString = getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(DISPLAY_FRAG, "");
+
+        if (!resultNameString.equals("")) {
+            resultNames.addAll(Arrays.asList(resultNameString.split(",")));
+            resultDates.addAll(Arrays.asList(resultDateString.split(",")));
+            resultPaths.addAll(Arrays.asList(resultPathString.split(",")));
+            resultCounts.addAll(Arrays.asList(resultCountString.split(",")));
+            for (int i=0; i<resultNames.size(); i++) {
+                results.add(new Result(resultNames.get(i), resultDates.get(i), resultPaths.get(i), Integer.parseInt(resultCounts.get(i))));
+            }
+        }
+
         return results;
     }
 

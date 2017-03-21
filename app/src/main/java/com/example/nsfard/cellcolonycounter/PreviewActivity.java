@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 
@@ -101,30 +102,31 @@ public class PreviewActivity extends AppCompatActivity implements AlgorithmCompl
         Log.e("TEST", "Alg completed with count: " + count + ", path: " + image);
         String imageNameString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_NAMES_KEY, "");
         if (!imageNameString.equals("")) {
-            imageNameString += ",";
+            imageName += ",";
         }
-        imageNameString += imageName;
+        imageNameString = imageName + imageNameString;
         prefsEditor.putString(MainActivity.RESULT_NAMES_KEY, imageNameString);
 
         String imageDateString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_DATES_KEY, "");
         if (!imageDateString.equals("")) {
-            imageDateString += ",";
+            imageDate += ",";
         }
-        imageDateString += imageDate;
+        imageDateString = imageDate + imageDateString;
         prefsEditor.putString(MainActivity.RESULT_DATES_KEY, imageDateString);
 
         String imagePathString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_PATHS_KEY, "");
         if (!imagePathString.equals("")) {
-            imagePathString += ",";
+            image += ",";
         }
-        imagePathString += image;
+        imagePathString = image + imagePathString;
         prefsEditor.putString(MainActivity.RESULT_PATHS_KEY, imagePathString);
 
         String imageCountString = getSharedPreferences(MainActivity.PREF_FILE, MODE_PRIVATE).getString(MainActivity.RESULT_COUNTS_KEY, "");
+        String imageCount = String.valueOf(count);
         if (!imageCountString.equals("")) {
-            imageCountString += ",";
+            imageCount += ",";
         }
-        imageCountString += String.valueOf(count);
+        imageCountString = imageCount + imageCountString;
         prefsEditor.putString(MainActivity.RESULT_COUNTS_KEY, imageCountString);
         prefsEditor.commit();
     }
@@ -159,32 +161,39 @@ public class PreviewActivity extends AppCompatActivity implements AlgorithmCompl
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 imageName = input.getText().toString();
-                imageDate = sdf.format(new Date(System.currentTimeMillis()));
-                final String path = MainActivity.PARENT_DIR + "/" + imageName + ".png";
-
-                prefsEditor.putString(MainActivity.DISPLAY_FRAG, MainActivity.DISPLAY_RESULTS);
-                prefsEditor.commit();
-
-                View v = findViewById(R.id.screenShotLayout);
-                takeScreenshot(v, path);
-
-                Log.e("TEST", "Began running alg");
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            CountingAlgorithm.runAlgorithm(path);
-                        } catch (Exception e) {
-                            Log.e("TEST", e.getMessage());
-                        }
-                    }
-                });
-
-                if (fromCam) {
-                    onBackPressed();
+                if (imageName.contains(",")) {
+                    Toast.makeText(getApplicationContext(), "Image name cannot include a ','", Toast.LENGTH_SHORT).show();
+                }
+                else if (imageName.contains("/")) {
+                    Toast.makeText(getApplicationContext(), "Image name cannot include a '/'", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    onRetakeSelected(null);
+                    imageDate = sdf.format(new Date(System.currentTimeMillis()));
+                    final String path = MainActivity.PARENT_DIR + "/" + imageName + ".png";
+
+                    prefsEditor.putString(MainActivity.DISPLAY_FRAG, MainActivity.DISPLAY_RESULTS);
+                    prefsEditor.commit();
+
+                    View v = findViewById(R.id.screenShotLayout);
+                    takeScreenshot(v, path);
+
+                    Log.e("TEST", "Began running alg");
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                CountingAlgorithm.runAlgorithm(path);
+                            } catch (Exception e) {
+                                Log.e("TEST", e.getMessage());
+                            }
+                        }
+                    });
+
+                    if (fromCam) {
+                        onBackPressed();
+                    } else {
+                        onRetakeSelected(null);
+                    }
                 }
             }
         });

@@ -55,12 +55,13 @@ public class ResultsTab extends Fragment implements AdapterView.OnItemClickListe
     }
 
     private void invalidateResultsList() {
-        Log.e("TEST", "invalidating table");
+//        Log.e("TEST", "invalidating table");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 resultList = ((MainActivity)getActivity()).getResults();
-                resultAdapter.notifyDataSetChanged();
+                resultAdapter = new ResultAdapter(getActivity(), android.R.layout.simple_list_item_1, resultList);
+                resultLV.setAdapter(resultAdapter);
             }
         });
     }
